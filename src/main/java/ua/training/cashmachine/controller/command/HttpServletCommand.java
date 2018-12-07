@@ -8,6 +8,6 @@ import java.io.IOException;
 @FunctionalInterface
 public interface HttpServletCommand {
 
-    void execute(HttpServletRequest request, HttpServletResponse responce)
+    void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException;
 }

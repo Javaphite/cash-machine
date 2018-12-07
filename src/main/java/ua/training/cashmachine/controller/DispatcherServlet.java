@@ -1,14 +1,22 @@
 package ua.training.cashmachine.controller;
 
 import ua.training.cashmachine.controller.command.HttpServletCommand;
+import ua.training.cashmachine.model.Role;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("")
 public class DispatcherServlet extends HttpServlet {
+
+    @Override
+    public void init() {
+        getServletContext().setAttribute("role", Role.UNKNOWN_USER);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -23,6 +31,6 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private static HttpServletCommand resolveCommand(HttpServletRequest req) {
-        return Activity.resolveCommand(req.getContextPath(), req.getParameter("command"));
+        return Activity.commandOf(req.getPathInfo(), req.getParameter("command"));
     }
 }

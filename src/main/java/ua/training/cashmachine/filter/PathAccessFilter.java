@@ -31,7 +31,7 @@ public class PathAccessFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             //ToDo: complement with adequate message and custom exception
-            throw new RuntimeException();
+            throw new RuntimeException("Access denied!" + actualPath + "___" + role.getPathsAllowed());
         }
     }
 }

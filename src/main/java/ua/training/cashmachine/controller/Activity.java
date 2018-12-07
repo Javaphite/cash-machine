@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public enum Activity {
-    TEST_ACTIVITY(TestCommand::new, "", "dumbCommand");
+    TEST_ACTIVITY(TestCommand::new, "/", "");
 
     private final HttpServletCommand command;
     private final String path;
@@ -23,15 +23,16 @@ public enum Activity {
         this.mapping = mapping;
     }
 
-    public static HttpServletCommand resolveCommand(String path, String mapping) {
+    public static HttpServletCommand commandOf(String path, String mapping) {
+        String actualMapping = Objects.isNull(mapping)? "": mapping;
         List<Activity> mappedActivities = Arrays.stream(values())
               .filter(activity -> Objects.equals(activity.getPath(), path))
-              .filter(activity -> Objects.equals(activity.getMapping(), mapping))
+              .filter(activity -> Objects.equals(activity.getMapping(), actualMapping))
               .collect(Collectors.toList());
 
         if (1 < mappedActivities.size()) {
             throw new MultipleMappingException(
-                    "Multiple mappings detected: path=" + path + ", command=" + mapping);
+                    "Multiple mappings detected: path=" + path + ", command=" + actualMapping);
         }
 
         return mappedActivities.get(0).getCommand();
