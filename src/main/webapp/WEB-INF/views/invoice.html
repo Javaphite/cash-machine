@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Invoice</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="styles/table.css">
+		<link rel="stylesheet" href="styles/lang/languages.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<!--<script src=/bootstrap/bootstrap.min.js"></script>-->
+	</head>
+
+	<body>
+		<header>
+			<img class="img-fluid" src="images/stripe.png">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 text-center">
+						<h1>INVOICE #000<h1>
+					</div>
+				</div>
+			</div>
+		</header>
+		<article>
+			<div class="container">
+				<div class="alert alert-info">
+					<strong>Info!</strong> alert-success, alert-info, alert-warning, alert-danger.
+				</div>
+			</div>
+			<div class="container">
+				<form>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Product</span>
+						</div>
+						<input type="text" class="form-control" placeholder="Name...">
+						<input type="text" class="form-control" placeholder="Code...">
+						<input type="text" class="form-control" placeholder="Quantity...">
+				  </div>
+				  <button class="btn btn-outline-secondary" type="button">Add to invoice</button>
+				  <div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<button class="btn btn-outline-secondary" type="button">Refund from invoice</button>
+						</div>
+						<input type="text" class="form-control" placeholder="Invoice #">
+					</div>
+				</form>
+			</div>
+			</div class="table-responsive">
+			<table class="table">
+					<thead class="thead-light">
+						<tr>
+							<th>#</th>
+							<th>Product name</th>
+							<th>Code</th>
+							<th>Unit</th>
+							<th>Quantity</th>
+							<th>Price</th>
+							<th>Discount</th>
+							<th>Total cost</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>Salmon</td>
+							<td>119</td>
+							<td>kg</td>
+							<td>1.5</td>
+							<td>$177.00</td>
+							<td>5%</td>
+							<td>252.23</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>TOTAL:</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>252.23</th>
+						</tr>
+					</tfoot>
+			</table>
+			</div class="container">
+				<ul class="pagination justify-content-end">
+					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+			</div>
+		</article>
+		<footer class="fixed-bottom">
+			<img class="img-fluid" src="images/lesser_stripe.png">
+		</footer>
+	</body>
+</html>

@@ -12,6 +12,6 @@ public class RemoveProduct implements HttpServletCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("command", getClass().getCanonicalName());
-        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
     }
 }
