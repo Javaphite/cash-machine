@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public final class RoleUtils {
 
+    private RoleUtils() { }
+
     public static List<String> getAllowedPaths(Activity... activitiesAllowed) {
         return Arrays.stream(activitiesAllowed)
                 .map(Activity::getPath)
