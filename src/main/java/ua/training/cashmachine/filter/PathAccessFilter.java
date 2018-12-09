@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = {"/","/main", "/journal", "/invoice", "/reports", "/supplies"})
 public class PathAccessFilter implements Filter {
 
     @Override
