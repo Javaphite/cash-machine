@@ -31,7 +31,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public enum Activity {
-    //Todo: move all string constants to outer config (properties)
     LOGIN_MENU(LoginMenu::new, "/"),
     MAIN_MENU(MainMenu::new, "/main"),
     JOURNAL_MENU(JournalMenu::new, "/journal"),
@@ -54,7 +53,6 @@ public enum Activity {
     SHOW_INVOICE(ShowInvoice::new, "/journal", "showInvoice"),
     GET_SUPPLIES(GetSupplies::new, "/supplies", "getSupplies"),
     UPDATE_SUPPLIES(UpdateSupplies::new, "/supplies", "updateSupplies");
-
 
     private static final String NO_COMMAND_MAPPING = "";
 
