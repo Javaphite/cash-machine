@@ -22,7 +22,7 @@ import ua.training.cashmachine.controller.command.ReportsMenu;
 import ua.training.cashmachine.controller.command.ShowInvoice;
 import ua.training.cashmachine.controller.command.SuppliesMenu;
 import ua.training.cashmachine.controller.command.UpdateSupplies;
-import ua.training.cashmachine.exception.MultipleMappingException;
+import ua.training.cashmachine.exception.BadMappingException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +30,10 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Describes all user activities available with web-interface,
+ * includes menu links and commands of that menus.
+ */
 public enum Activity {
     LOGIN_MENU(LoginMenu::new, "/"),
     MAIN_MENU(MainMenu::new, "/main"),
@@ -54,7 +58,7 @@ public enum Activity {
     GET_SUPPLIES(GetSupplies::new, "/supplies", "getSupplies"),
     UPDATE_SUPPLIES(UpdateSupplies::new, "/supplies", "updateSupplies");
 
-    private static final String NO_COMMAND_MAPPING = "";
+    public static final String NO_COMMAND_MAPPING = "";
 
     private final HttpServletCommand command;
     private final String path;
@@ -70,20 +74,34 @@ public enum Activity {
         this.commandMapping = commandMapping;
     }
 
+    /**
+     * Static factory method for handing off the command instances
+     * for given path and command mapping.
+     * @param path path in Servlet context request came from;
+     * @param commandMapping mapping for command;
+     * @return appropriate command for given path and mapping.
+     *
+     * @throws BadMappingException if more than one mapping is suitable
+     * for given path and command pair.
+     */
     public static HttpServletCommand commandOf(String path, String commandMapping) {
+        //TODO: add logging here
         String actualMapping = Objects.isNull(commandMapping)? NO_COMMAND_MAPPING: commandMapping;
 
         List<Activity> mappedActivities = Arrays.stream(values())
-              .filter(activity -> Objects.equals(activity.getPath(), path))
-              .filter(activity -> Objects.equals(activity.getCommandMapping(), actualMapping))
+              .filter(activity -> Objects.equals(activity.path, path))
+              .filter(activity -> Objects.equals(activity.commandMapping, actualMapping))
               .collect(Collectors.toList());
 
         if (1 < mappedActivities.size()) {
-            throw new MultipleMappingException(
-                    "Multiple mappings detected: path=" + path + ", command=" + actualMapping);
+            throw new BadMappingException("Multiple mappings detected: path=" + path + ", command=" + actualMapping);
         }
 
-        return mappedActivities.get(0).getCommand();
+        if (mappedActivities.isEmpty()) {
+            throw new BadMappingException("No mappings found: path=" + path + ", command=" + actualMapping);
+        }
+
+        return mappedActivities.get(0).command;
     }
 
     public HttpServletCommand getCommand() {
