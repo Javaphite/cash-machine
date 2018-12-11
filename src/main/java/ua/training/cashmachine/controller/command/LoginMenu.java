@@ -7,11 +7,9 @@ import java.io.IOException;
 
 public class LoginMenu implements HttpServletCommand {
 
-    //ToDO: implement me
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("command", getClass().getCanonicalName());
-        request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+        HttpServletCommand.forward("index", request, response);
     }
 }
