@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model;
+package ua.training.cashmachine.model.entity;
 
 import ua.training.cashmachine.controller.Activity;
 import ua.training.cashmachine.model.utils.RoleUtils;

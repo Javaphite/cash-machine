@@ -1,7 +1,7 @@
 package ua.training.cashmachine.model.utils;
 
 import ua.training.cashmachine.controller.Activity;
-import ua.training.cashmachine.model.Role;
+import ua.training.cashmachine.model.entity.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
