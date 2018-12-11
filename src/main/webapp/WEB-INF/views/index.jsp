@@ -46,21 +46,25 @@
 		</header>
 		<article>
 			<div class="container">
-				<div class="alert alert-info" hidden>
-					<strong>Info!</strong> alert-success, alert-info, alert-warning, alert-danger.
+			    <c:if test="${empty alertVisibility}" >
+                     <c:set var="alertVisibility" value="none"/>
+                </c:if>
+				<div class="alert alert-${alertType}" style="display: ${alertVisibility}">
+					<strong>Attention!</strong> ${alertText}
 				</div>
 			<div class="container">
 			<div class="container login-container text-center">
 				<div class="col-lg-8 login-form-1">
 						<h3>Please, complete authorization!</h3>
-						<form>
+						<form method="POST">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Login..." value=""/>
+								<input name="login" type="text" class="form-control" placeholder="Login..." value=""/>
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" placeholder="Password..." value="" />
+								<input name="password" type="password" class="form-control" placeholder="Password..." value="" />
 							</div>
 							<div class="form-group">
+							    <input name="command" type="hidden" value="login"/>
 								<input type="submit" class="btnSubmit" value="Login" />
 							</div>
 						</form>
