@@ -1,5 +1,7 @@
 package ua.training.cashmachine.controller.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.controller.command.HttpServletCommand;
 import ua.training.cashmachine.controller.util.RequestInfoUtil;
 import ua.training.cashmachine.model.entity.Role;
@@ -16,6 +18,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/","/main", "/journal", "/invoice", "/reports", "/supplies"})
 public class AccessFilter implements Filter {
+    private static final Logger LOG = LoggerFactory.getLogger(AccessFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -29,6 +32,7 @@ public class AccessFilter implements Filter {
                 && role.getCommandsAllowed().contains(actualCommand)) {
             chain.doFilter(request, response);
         } else {
+            LOG.warn("Access denied for user role {}", role);
             //ToDo: complement with adequate message and custom exception
             throw new RuntimeException("Access denied!");
         }
