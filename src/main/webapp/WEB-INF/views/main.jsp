@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<title>Main Menu</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="styles/lang/languages.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<style><c:import url="/styles/login.css"/></style>
+        <style><c:import url="/styles/lang/languages.min.css"/></style>
+        <style><c:import url="/styles/bootstrap/bootstrap.min.css"/></style>
+        <script language="javascript" type="text/javascript">
+               <c:import url="/styles/bootstrap/jquery-3.2.1.slim.min.js"/>
+        </script>
+        <script language="javascript" type="text/javascript">
+               <c:import url="/styles/bootstrap/popper.min.js"/>
+        </script>
+        <script language="javascript" type="text/javascript">
+               <c:import url="/styles/bootstrap/bootstrap.min.js"/>
+        </script>
 	</head>
 
 	<body>
@@ -18,12 +26,20 @@
 			<img class="img-fluid" src="images/stripe.png">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-8 text-center">
+				    <div class="col-lg-4">
+				        <c:url var="logoutCommand" value="">
+                              <c:param name="command" value="logout"/>
+                        </c:url>
+                    	<a href="${logoutCommand}">Log out</a>
+                    </div>
+					<div class="col-lg-4 text-center">
 						<h1>MAIN MENU<h1>
 					</div>
 					<div class="col-lg-4 text-right">
 						<div class="dropdown">
-							<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn-outline-secondary dropdown-toggle"
+							 type="button" id="dropdownMenuButton"
+							 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span class="lang-sm lang-lbl" lang="en"/>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -37,8 +53,16 @@
 		</header>
 		<article>
 			<div class="container">
-				<div class="alert alert-info" hidden>
-					<strong>Info!</strong> alert-success, alert-info, alert-warning, alert-danger.
+                <c:choose>
+			        <c:when test="${empty alert}">
+			            <c:set var="alertDisplayMod" value="none"/>
+			        </c:when>
+			        <c:otherwise>
+                    	<c:set var="alertDisplayMod" value="block"/>
+                    </c:otherwise>
+			    </c:choose>
+				<div class="alert alert-${alert.type}" style="display: ${alertDisplayMod}">
+					<strong>${alert.attentionText}</strong> ${alert.message}
 				</div>
 			</div>
 			<div class="col-lg-6 text-center">
