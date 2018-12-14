@@ -46,12 +46,18 @@
 		</header>
 		<article>
 			<div class="container">
-			    <c:if test="${empty alertVisibility}" >
-                     <c:set var="alertVisibility" value="none"/>
-                </c:if>
-				<div class="alert alert-${alertType}" style="display: ${alertVisibility}">
-					<strong>Attention!</strong> ${alertText}
+			    <c:choose>
+			        <c:when test="${empty alert}">
+			            <c:set var="alertDisplayMod" value="none"/>
+			        </c:when>
+			        <c:otherwise>
+                    	<c:set var="alertDisplayMod" value="block"/>
+                    </c:otherwise>
+			    </c:choose>
+				<div class="alert alert-${alert.type}" style="display: ${alertDisplayMod}">
+					<strong>${alert.attentionText}</strong> ${alert.message}
 				</div>
+			</div>
 			<div class="container">
 			<div class="container login-container text-center">
 				<div class="col-lg-8 login-form-1">
