@@ -50,8 +50,4 @@ public class Login implements HttpServletCommand {
     private UserService getUserService(HttpServletRequest request) {
         return (UserService) request.getSession().getAttribute("userService");
     }
-
-
-
-
 }
