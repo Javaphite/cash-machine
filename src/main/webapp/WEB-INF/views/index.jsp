@@ -11,13 +11,13 @@
         <style><c:import url="/styles/lang/languages.min.css"/></style>
         <style><c:import url="/styles/bootstrap/bootstrap.min.css"/></style>
         <script language="javascript" type="text/javascript">
-               <c:import url="/styles/bootstrap/jquery-3.2.1.slim.min.js"/>
+            <c:import url="/styles/bootstrap/jquery-3.2.1.slim.min.js"/>
         </script>
         <script language="javascript" type="text/javascript">
-               <c:import url="/styles/bootstrap/popper.min.js"/>
+            <c:import url="/styles/bootstrap/popper.min.js"/>
         </script>
         <script language="javascript" type="text/javascript">
-               <c:import url="/styles/bootstrap/bootstrap.min.js"/>
+            <c:import url="/styles/bootstrap/bootstrap.min.js"/>
         </script>
     </head>
 
