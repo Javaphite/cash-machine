@@ -1,33 +1,57 @@
 package ua.training.cashmachine.controller.command;
 
-import ua.training.cashmachine.exception.UserAuthorizationException;
+import ua.training.cashmachine.controller.dto.Alert;
 import ua.training.cashmachine.model.entity.User;
 import ua.training.cashmachine.model.service.UserService;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Optional;
 
 public class Login implements HttpServletCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ServletContext context = session.getServletContext();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        UserService service = getUserService(request);
+        Optional<User> optionalUser = service.getUserByCredentials(login, password);
+        Collection<String> activeUsers = (Collection<String>) context.getAttribute("activeUsers");
 
-        try {
-            User user = new UserService().getUserByCredentials(login, password);
-            request.getSession().setAttribute("role", user.getRole());
+        if(optionalUser.isPresent() && !activeUsers.contains(login)) {
+            User user = optionalUser.get();
+            session.setAttribute("role", user.getRole());
+            session.setAttribute("login", user.getLogin());
+            session.setAttribute("userId", user.getUserId());
+
+            activeUsers.add(user.getLogin());
+            session.getServletContext().setAttribute("users", activeUsers);
             HttpServletCommand.redirect("main", request, response);
-        } catch (UserAuthorizationException exception) {
-            //Todo: log me
-            request.setAttribute("alertType", "danger");
-            request.setAttribute("alertVisibility", "block");
-            request.setAttribute("alertText",
-                    "Wrong user credentials! Please, check your login and password and try again.");
+        } else {
+            String warningMessage = optionalUser.isPresent()? "user already logged in.": "user not found.";
+            Alert alert = new Alert("Authorization failed:", warningMessage, Alert.Type.DANGER);
+
+            LOG.warn("Authorization failed: {} ({})", warningMessage, login);
+
+            request.setAttribute("alert", alert);
             HttpServletCommand.forward("index", request, response);
         }
     }
+
+    // TODO: looks weird, keep your eye on this method
+    private UserService getUserService(HttpServletRequest request) {
+        return (UserService) request.getSession().getAttribute("userService");
+    }
+
+
+
+
 }

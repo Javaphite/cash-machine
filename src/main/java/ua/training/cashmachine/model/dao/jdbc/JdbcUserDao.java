@@ -3,7 +3,6 @@ package ua.training.cashmachine.model.dao.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.exception.UserAuthorizationException;
 import ua.training.cashmachine.model.dao.UserDao;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
@@ -13,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Optional;
 
 public class JdbcUserDao implements UserDao {
 
@@ -44,7 +44,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public User findByCredentials(String login, String hash) throws UserAuthorizationException {
+    public Optional<User> findByCredentials(String login, String hash) {
         try (Connection connection = JdbcConnectionPoolHolder.getConnection();
              PreparedStatement statement = JdbcConnectionPoolHolder.getStatement(connection,
                      "SELECT * FROM users WHERE login=? AND hash=?")) {
@@ -62,7 +62,7 @@ public class JdbcUserDao implements UserDao {
                 user.setRole(Role.valueOf(results.getNString(4)));
                 user.setHash(results.getNString(5));
             }
-            return user;
+            return Optional.ofNullable(user);
         } catch (SQLException exception) {
             LOG.error("User info reading failed: ", exception);
             throw new UncheckedSQLException(exception);
