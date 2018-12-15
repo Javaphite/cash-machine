@@ -21,10 +21,10 @@ public class Login implements HttpServletCommand {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
         UserService service = getUserService(request);
         Locale locale = (Locale) session.getAttribute("language");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
         Optional<User> optionalUser = service.getUserByCredentials(login, password, locale);
         Collection<String> activeUsers = (Collection<String>) context.getAttribute("activeUsers");
 
