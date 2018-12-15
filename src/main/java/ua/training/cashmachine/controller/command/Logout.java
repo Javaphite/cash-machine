@@ -1,5 +1,8 @@
 package ua.training.cashmachine.controller.command;
 
+import ua.training.cashmachine.model.entity.User;
+import ua.training.cashmachine.model.service.UserService;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +18,11 @@ public class Logout implements HttpServletCommand {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
-        String login = (String) session.getAttribute("login");
+        UserService service = (UserService) session.getAttribute("userService");
+        User user = (User) session.getAttribute("user");
+        String login = user.getLogin();
 
-        session.setAttribute("role", null);
-        session.setAttribute("login", null);
-        session.setAttribute("userId", null);
+        session.setAttribute("user", service.getUnknownUser());
 
         Collection<String> activeUsers = (Collection<String>) context.getAttribute("activeUsers");
         if(activeUsers.contains(login)) {

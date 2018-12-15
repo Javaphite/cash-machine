@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Optional;
 
 public class Login implements HttpServletCommand {
@@ -23,20 +24,21 @@ public class Login implements HttpServletCommand {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         UserService service = getUserService(request);
-        Optional<User> optionalUser = service.getUserByCredentials(login, password);
+        Locale locale = (Locale) session.getAttribute("language");
+        Optional<User> optionalUser = service.getUserByCredentials(login, password, locale);
         Collection<String> activeUsers = (Collection<String>) context.getAttribute("activeUsers");
 
         if(optionalUser.isPresent() && !activeUsers.contains(login)) {
             User user = optionalUser.get();
-            session.setAttribute("role", user.getRole());
-            session.setAttribute("login", user.getLogin());
-            session.setAttribute("userId", user.getUserId());
+            session.setAttribute("user", user);
 
             activeUsers.add(user.getLogin());
             session.getServletContext().setAttribute("users", activeUsers);
             HttpServletCommand.redirect("main", request, response);
         } else {
-            String warningMessage = optionalUser.isPresent()? "user already logged in.": "user not found.";
+            String warningMessage = optionalUser.isPresent()?
+                    "user already logged in.":
+                    "no users found for given credentials.";
             Alert alert = new Alert("Authorization failed:", warningMessage, Alert.Type.DANGER);
 
             LOG.warn("Authorization failed: {} ({})", warningMessage, login);

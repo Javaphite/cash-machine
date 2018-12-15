@@ -1,25 +1,27 @@
-package ua.training.cashmachine.model.dao.jdbc;
+package ua.training.cashmachine.model.dao.mysql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.model.dao.DaoFactory;
 import ua.training.cashmachine.model.dao.UserDao;
 
-//TODO: doc me
-public final class JdbcDaoFactory implements DaoFactory {
+import java.util.Locale;
 
-    private static final Logger LOG = LoggerFactory.getLogger(JdbcDaoFactory.class);
+//TODO: doc me
+public final class MySqlDaoFactory implements DaoFactory {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MySqlDaoFactory.class);
 
     private static volatile DaoFactory daoFactory;
 
-    private JdbcDaoFactory() {}
+    private MySqlDaoFactory() {}
 
     //TODO: log me
     public static DaoFactory getInstance() {
         if (null == daoFactory) {
-            synchronized (JdbcDaoFactory.class) {
+            synchronized (MySqlDaoFactory.class) {
                 if (null == daoFactory) {
-                    daoFactory = new JdbcDaoFactory();
+                    daoFactory = new MySqlDaoFactory();
                 }
             }
         }
@@ -27,7 +29,7 @@ public final class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public UserDao getUserDao() {
-        return new JdbcUserDao();
+    public UserDao getUserDao(Locale locale) {
+        return new MySqlUserDao(locale);
     }
 }

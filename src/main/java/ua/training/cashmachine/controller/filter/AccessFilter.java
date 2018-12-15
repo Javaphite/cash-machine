@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.controller.command.HttpServletCommand;
 import ua.training.cashmachine.controller.util.RequestInfoUtil;
 import ua.training.cashmachine.model.entity.Role;
+import ua.training.cashmachine.model.entity.User;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -32,7 +33,7 @@ public class AccessFilter implements Filter {
                 && role.getCommandsAllowed().contains(actualCommand)) {
             chain.doFilter(request, response);
         } else {
-            LOG.warn("Access denied for user role {}", role);
+            LOG.warn("Access to path={}, command={} denied for user role {}", actualPath, actualCommand, role);
             //ToDo: complement with adequate message and custom exception
             throw new RuntimeException("Access denied!");
         }
@@ -40,10 +41,11 @@ public class AccessFilter implements Filter {
 
     private Role getActualUserRole(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Role role = (Role) session.getAttribute("role");
-        if(null == role) {
-            role = Role.UNKNOWN_USER;
+        User user = (User) session.getAttribute("user");
+
+        if(null == user) {
+           return Role.UNKNOWN_USER;
         }
-        return role;
+        return user.getRole();
     }
 }
