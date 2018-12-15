@@ -22,7 +22,7 @@ public class Login implements HttpServletCommand {
         HttpSession session = request.getSession();
         ServletContext context = session.getServletContext();
         UserService service = getUserService(request);
-        Locale locale = (Locale) session.getAttribute("language");
+        Locale locale = (Locale) session.getAttribute("locale");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         Optional<User> optionalUser = service.getUserByCredentials(login, password, locale);

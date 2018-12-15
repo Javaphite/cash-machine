@@ -21,7 +21,7 @@ public class SessionListener implements HttpSessionListener {
         HttpSession session = se.getSession();
         session.setAttribute("user", service.getUnknownUser());
         session.setAttribute("userService", service);
-        session.setAttribute("language", Locale.forLanguageTag("EN_en"));
+        session.setAttribute("locale", Locale.forLanguageTag("uk-UA"));
     }
 
     @Override

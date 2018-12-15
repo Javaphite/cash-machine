@@ -43,7 +43,7 @@ final class MySqlConfiguration {
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
-                    pooledDataSource.setPassword("----");
+                    pooledDataSource.setPassword("WesPer1771");
                     dataSource = pooledDataSource;
                 }
             }
