@@ -1,7 +1,10 @@
 package ua.training.cashmachine.model.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import ua.training.cashmachine.model.annotation.Localized;
 import ua.training.cashmachine.model.annotation.WriteOnly;
+
+import java.util.Objects;
 
 public class User {
 
@@ -15,15 +18,36 @@ public class User {
     @Localized private String lastName;
     @WriteOnly private boolean expired;
 
-    //TODO: rewrite equals and hashcode
     @Override
     public boolean equals(Object obj) {
-       return false;
+        if (this == obj) {
+            return true;
+        }
+
+        if ( (null == obj) || Objects.equals(getClass(),obj.getClass()) ) {
+            return false;
+        }
+
+        User user = (User) obj;
+        return (userId == user.userId) && Objects.equals(user.login, login);
     }
 
     @Override
     public int hashCode() {
-       return 0;
+        int result = userId;
+        result = 31 * result + login.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("userId", userId)
+                .append("login", login)
+                .append("role", role)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .toString();
     }
 
     public int getUserId() {
