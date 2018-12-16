@@ -16,7 +16,7 @@ public class User {
     @WriteOnly private String hash;
     @Localized private String firstName;
     @Localized private String lastName;
-    @WriteOnly private boolean expired;
+    private boolean expired;
 
     @Override
     public boolean equals(Object obj) {

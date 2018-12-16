@@ -5,8 +5,10 @@ import ua.training.cashmachine.model.dao.UserDao;
 import ua.training.cashmachine.model.dao.mysql.MySqlDaoFactory;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
+import ua.training.cashmachine.model.utils.LocalizationUtils;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserService {
@@ -14,6 +16,12 @@ public class UserService {
     public Optional<User> getUserByCredentials(String login, String pass, Locale locale) {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao(locale);
         return userDao.find(login, DigestUtils.sha256Hex(pass));
+    }
+
+    public User createUser(User user, Locale locale, String... localizedValues) {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao(locale);
+        Map<String, String> localizationMap = LocalizationUtils.getLocalizationMap(user.getClass(), localizedValues);
+        return userDao.create(user, localizationMap);
     }
 
     public User getUnknownUser() {
