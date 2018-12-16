@@ -1,7 +1,10 @@
 package ua.training.cashmachine.model.dao.mysql;
 
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
+import ua.training.cashmachine.model.dao.DataSourceConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -12,12 +15,22 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-final class MySqlConfiguration {
+final class MySqlConfiguration implements DataSourceConfiguration {
 
-    private static volatile DataSource dataSource;
+    private static final Logger LOG = LoggerFactory.getLogger(MySqlConfiguration.class);
 
+    private static volatile DataSourceConfiguration instance;
+
+    private final DataSource dataSource;
+
+    //TODO: move this enum to separate file after it grew-up to 8+ elements
     public enum SqlTemplate {
-        GET_USER_BY_CREDENTIALS("user.find.bycredentials");
+        GET_USER_BY_CREDENTIALS("user.find.credentials"),
+        GET_ALL_USERS("user.find.all"),
+        GET_USER_BY_ID("user.find.id"),
+        CREATE_USER("user.create"),
+        DELETE_USER("user.delete"),
+        UPDATE_USER("user.update");
 
         private final String bundleKey;
 
@@ -28,53 +41,56 @@ final class MySqlConfiguration {
         public String getBundleKey() {
             return bundleKey;
         }
+
+        public String getQuery(Locale locale) {
+            return ResourceBundle.getBundle("sql/statements", locale)
+                    .getString(bundleKey);
+        }
+
     }
 
     // Private constructor to prevent instantiation
-    private MySqlConfiguration() { }
+    private MySqlConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     //Todo: read full config from property file
     //TODO: log me
-    private static DataSource getDataSource() {
-        if (null == dataSource) {
+    public static DataSourceConfiguration getInstance() {
+        if (null == instance) {
             synchronized (MySqlConfiguration.class) {
-                if (dataSource == null) {
+                if (null == instance) {
                     String url = "jdbc:mysql://localhost:3306/cashmachinedb";
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
                     pooledDataSource.setPassword("WesPer1771");
-                    dataSource = pooledDataSource;
+                    instance = new MySqlConfiguration(pooledDataSource);
                 }
             }
         }
-        return dataSource;
+        return instance;
     }
 
-    static Connection getConnection() {
+    @Override
+    public Connection getConnection() {
         try {
-            Connection connection = getDataSource().getConnection();
+            Connection connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             return connection;
         } catch (SQLException exception) {
-            //TODO: log me
-            //LOG.error("Connection pooling exception: ", exception);
+            LOG.error("Connection distribution failed: ", exception);
             throw new UncheckedSQLException(exception);
         }
     }
 
-    static PreparedStatement getStatement(Connection connection, String sql) {
+    @Override
+    public PreparedStatement getStatement(Connection connection, String query) {
         try {
-            return Objects.requireNonNull(connection).prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            return Objects.requireNonNull(connection).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException exception) {
-            //TODO: log me
-            //LOG.error("Statement creation exception: ", exception);
+            LOG.error("Statement creation failed: ", exception);
             throw new UncheckedSQLException(exception);
         }
-    }
-
-    static PreparedStatement getStatement(Connection connection, SqlTemplate template, Locale locale) {
-        String sql = ResourceBundle.getBundle("sql/statements", locale).getString(template.getBundleKey());
-        return getStatement(connection, sql);
     }
 }

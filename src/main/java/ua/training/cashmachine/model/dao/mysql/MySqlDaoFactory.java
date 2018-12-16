@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.model.dao.DaoFactory;
 import ua.training.cashmachine.model.dao.UserDao;
 
+import java.sql.Connection;
 import java.util.Locale;
 
 //TODO: doc me
@@ -30,6 +31,6 @@ public final class MySqlDaoFactory implements DaoFactory {
 
     @Override
     public UserDao getUserDao(Locale locale) {
-        return new MySqlUserDao(locale);
+        return new MySqlUserDao(MySqlConfiguration.getInstance(), locale);
     }
 }
