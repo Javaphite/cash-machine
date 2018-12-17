@@ -28,7 +28,8 @@ public class SessionListener implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         ServletContext context = session.getServletContext();
-        String login = (String) session.getAttribute("login");
+        User user = (User) session.getAttribute("user");
+        String login = user.getLogin();
         Collection<String> activeUsers = (Collection<String>) context.getAttribute("activeUsers");
 
         if(activeUsers.contains(login)) {
