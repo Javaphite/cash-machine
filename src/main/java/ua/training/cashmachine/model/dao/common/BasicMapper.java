@@ -1,7 +1,6 @@
 package ua.training.cashmachine.model.dao.common;
 
-import ua.training.cashmachine.model.entity.User;
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -11,7 +10,10 @@ import java.util.LinkedList;
  * Base interface for mapping {@link ResultSet} rows into entities
  * @param <T> type of entity this mapper associated with.
  */
-public interface Mapper<T> {
+public interface BasicMapper<T> {
+
+    //ToDo: DOC ME
+    PreparedStatement mapDelete(PreparedStatement statement, T entity) throws SQLException;
 
     /**
      * Base method for mapping one row of {@link ResultSet}
@@ -20,7 +22,7 @@ public interface Mapper<T> {
      * @return entity instance or {@code null} if {@code resultSet} was empty.
      * @throws SQLException in case of problems during connection to DB.
      */
-    T mapRow(ResultSet resultSet) throws SQLException;
+    T mapFind(ResultSet resultSet) throws SQLException;
 
     /**
      * Template method for mapping multiple rows from {@link ResultSet}
@@ -29,10 +31,10 @@ public interface Mapper<T> {
      * @return {@link Collection} of entity instances or empty one if {@code resultSet} was empty.
      * @throws SQLException in case of problems during connection to DB.
      */
-    default Collection<T> mapAll(ResultSet resultSet) throws SQLException {
+    default Collection<T> findAllMap(ResultSet resultSet) throws SQLException {
         Collection<T> entities = new LinkedList<>();
         while (!resultSet.isAfterLast()) {
-            entities.add(mapRow(resultSet));
+            entities.add(mapFind(resultSet));
         }
         return entities;
     }

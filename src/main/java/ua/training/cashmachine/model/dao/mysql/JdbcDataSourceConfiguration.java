@@ -15,9 +15,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-final class MySqlConfiguration implements DataSourceConfiguration {
+final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MySqlConfiguration.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcDataSourceConfiguration.class);
 
     private static volatile DataSourceConfiguration instance;
 
@@ -55,22 +55,22 @@ final class MySqlConfiguration implements DataSourceConfiguration {
     }
 
     // Private constructor to prevent instantiation
-    private MySqlConfiguration(DataSource dataSource) {
+    private JdbcDataSourceConfiguration(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     //Todo: read full config from property file
     //TODO: log me
-    public static DataSourceConfiguration getInstance() {
+    static DataSourceConfiguration getInstance() {
         if (null == instance) {
-            synchronized (MySqlConfiguration.class) {
+            synchronized (JdbcDataSourceConfiguration.class) {
                 if (null == instance) {
                     String url = "jdbc:mysql://localhost:3306/cashmachinedb";
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
-                    pooledDataSource.setPassword("WesPer1771");
-                    instance = new MySqlConfiguration(pooledDataSource);
+                    pooledDataSource.setPassword("Grammar@109");
+                    instance = new JdbcDataSourceConfiguration(pooledDataSource);
                 }
             }
         }

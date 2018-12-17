@@ -6,24 +6,23 @@ import ua.training.cashmachine.model.dao.DaoFactory;
 import ua.training.cashmachine.model.dao.TurnDao;
 import ua.training.cashmachine.model.dao.UserDao;
 
-import java.sql.Connection;
 import java.util.Locale;
 
 //TODO: doc me
-public final class MySqlDaoFactory implements DaoFactory {
+public final class JdbcDaoFactory implements DaoFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MySqlDaoFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcDaoFactory.class);
 
     private static volatile DaoFactory daoFactory;
 
-    private MySqlDaoFactory() {}
+    private JdbcDaoFactory() {}
 
     //TODO: log me
     public static DaoFactory getInstance() {
         if (null == daoFactory) {
-            synchronized (MySqlDaoFactory.class) {
+            synchronized (JdbcDaoFactory.class) {
                 if (null == daoFactory) {
-                    daoFactory = new MySqlDaoFactory();
+                    daoFactory = new JdbcDaoFactory();
                 }
             }
         }
@@ -32,11 +31,11 @@ public final class MySqlDaoFactory implements DaoFactory {
 
     @Override
     public UserDao getUserDao(Locale locale) {
-        return new MySqlUserDao(MySqlConfiguration.getInstance(), locale);
+        return new JdbcUserDao(JdbcDataSourceConfiguration.getInstance(), locale);
     }
 
     @Override
-    public TurnDao getTurnDao() {
-        return new MySqlTurnDao(MySqlConfiguration.getInstance());
+    public TurnDao getTurnDao(Locale locale) {
+        return new JdbcTurnDao(JdbcDataSourceConfiguration.getInstance(), getUserDao(locale));
     }
 }
