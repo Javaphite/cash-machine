@@ -4,7 +4,7 @@ import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.dao.DataSourceConfiguration;
+import ua.training.cashmachine.model.dao.common.DataSourceConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -30,7 +30,9 @@ final class MySqlConfiguration implements DataSourceConfiguration {
         GET_USER_BY_ID("user.find.id"),
         CREATE_USER("user.create"),
         DELETE_USER("user.delete"),
-        UPDATE_USER("user.update");
+        UPDATE_USER("user.update"),
+        GET_ALL_TURNS("turn.find.all"),
+        GET_TURN_BY_ID("turn.find.id");
 
         private final String bundleKey;
 
@@ -43,8 +45,11 @@ final class MySqlConfiguration implements DataSourceConfiguration {
         }
 
         public String getQuery(Locale locale) {
-            return ResourceBundle.getBundle("sql/statements", locale)
-                    .getString(bundleKey);
+            return ResourceBundle.getBundle("sql/statements", locale).getString(bundleKey);
+        }
+
+        public String getQuery() {
+            return getQuery(Locale.getDefault());
         }
 
     }

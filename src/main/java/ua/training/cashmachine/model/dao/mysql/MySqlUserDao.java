@@ -1,7 +1,7 @@
 package ua.training.cashmachine.model.dao.mysql;
 
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.dao.DataSourceConfiguration;
+import ua.training.cashmachine.model.dao.common.DataSourceConfiguration;
 import ua.training.cashmachine.model.dao.UserDao;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
@@ -163,15 +163,5 @@ public class MySqlUserDao implements UserDao {
             user.setHash(User.DEFAULT_HASH);
         }
         return user;
-    }
-
-    //TODO: test me
-    @Override
-    public Collection<User> mapAll(ResultSet resultSet) throws SQLException {
-        Collection<User> users = new LinkedList<>();
-        while (!resultSet.isAfterLast()) {
-            users.add(mapRow(resultSet));
-        }
-        return users;
     }
 }
