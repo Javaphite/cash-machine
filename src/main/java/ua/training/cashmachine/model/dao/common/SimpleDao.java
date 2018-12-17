@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao;
+package ua.training.cashmachine.model.dao.common;
 
 public interface SimpleDao<T> extends BasicDao<T> {
 

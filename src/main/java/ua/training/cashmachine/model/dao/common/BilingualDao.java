@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao;
+package ua.training.cashmachine.model.dao.common;
 
 import java.util.Map;
 
