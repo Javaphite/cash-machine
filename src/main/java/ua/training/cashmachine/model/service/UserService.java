@@ -18,6 +18,11 @@ public class UserService {
         return userDao.find(login, DigestUtils.sha256Hex(pass));
     }
 
+    public User updateUserLocale(User user, Locale locale) {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao(locale);
+        return userDao.find(user.getUserId()).orElse(user);
+    }
+
     public User createUser(User user, Locale locale, String... localizedValues) {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao(locale);
         Map<String, String> localizationMap = LocalizationUtils.getLocalizationMap(user.getClass(), localizedValues);

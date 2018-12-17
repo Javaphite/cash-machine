@@ -37,14 +37,21 @@
 					</div>
 					<div class="col-lg-4 text-right">
 						<div class="dropdown">
-							<button class="btn btn-outline-secondary dropdown-toggle"
-							 type="button" id="dropdownMenuButton"
-							 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="lang-sm lang-lbl" lang="en"/>
+							<button class="btn btn-outline-secondary dropdown-toggle" type="button"
+							 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="lang-sm lang-lbl" lang="${locale.language}"/>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a class="dropdown-item" href="#"><span class="lang-sm lang-lbl" lang="en"/></a>
-								<a class="dropdown-item" href="#"><span class="lang-sm lang-lbl" lang="uk"/></a>
+							    <c:url var="uk_UA" value="">
+                                       <c:param name="command" value="changeLocale"/>
+                                       <c:param name="localeTag" value="uk-UA"/>
+                                </c:url>
+								<a class="dropdown-item" href="${uk_UA}"><span class="lang-sm lang-lbl" lang="uk"/></a>
+								<c:url var="en_US" value="">
+                                       <c:param name="command" value="changeLocale"/>
+                                       <c:param name="localeTag" value="en-US"/>
+                                 </c:url>
+								<a class="dropdown-item" href="${en_US}"><span class="lang-sm lang-lbl" lang="en"/></a>
 							</div>
 						</div>
 					</div>
