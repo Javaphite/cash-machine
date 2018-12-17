@@ -6,5 +6,5 @@ public interface DaoFactory {
     // ToDO: add all daos
     UserDao getUserDao(Locale locale);
 
-    TurnDao getTurnDao();
+    TurnDao getTurnDao(Locale locale);
 }

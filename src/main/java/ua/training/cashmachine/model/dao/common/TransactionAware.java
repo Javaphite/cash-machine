@@ -9,8 +9,6 @@ import java.sql.SQLException;
 
 public interface TransactionAware {
 
-    Logger LOG = LoggerFactory.getLogger(TransactionAware.class);
-
     default void commitAndClose(Connection connection) {
         try {
             if (!connection.isClosed()) {
@@ -18,7 +16,8 @@ public interface TransactionAware {
                 connection.close();
             }
         } catch (SQLException exception) {
-            LOG.error("Transaction commit problem occurred: ", exception);
+            Logger log = LoggerFactory.getLogger(TransactionAware.class);
+            log.error("Transaction commit problem occurred: ", exception);
             rollbackAndClose(connection);
             throw new UncheckedSQLException(exception);
         }
@@ -31,7 +30,8 @@ public interface TransactionAware {
                 connection.close();
             }
         } catch (SQLException exception) {
-            LOG.error("Transaction rollback problem occurred: ", exception);
+            Logger log = LoggerFactory.getLogger(TransactionAware.class);
+            log.error("Transaction rollback problem occurred: ", exception);
             throw new UncheckedSQLException(exception);
         }
     }
