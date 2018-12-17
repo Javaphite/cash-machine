@@ -22,6 +22,7 @@ public interface HttpServletCommand {
 
     static void redirect(String path, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        response.sendRedirect(request.getContextPath() + '/' + path);
+        String transformedPath = ('/'==path.charAt(0))? path: ('/' + path);
+        response.sendRedirect(request.getContextPath() + transformedPath);
     }
 }

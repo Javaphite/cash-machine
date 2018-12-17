@@ -30,6 +30,6 @@ public class Logout implements HttpServletCommand {
             session.getServletContext().setAttribute("users", activeUsers);
         }
 
-        HttpServletCommand.redirect("", request, response);
+        HttpServletCommand.redirect("/", request, response);
     }
 }
