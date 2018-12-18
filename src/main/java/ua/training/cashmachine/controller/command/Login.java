@@ -1,7 +1,9 @@
 package ua.training.cashmachine.controller.command;
 
 import ua.training.cashmachine.controller.dto.Alert;
+import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
+import ua.training.cashmachine.model.service.TurnService;
 import ua.training.cashmachine.model.service.UserService;
 
 import javax.servlet.ServletContext;
@@ -51,5 +53,9 @@ public class Login implements HttpServletCommand {
     // TODO: looks weird, keep your eye on this method
     private UserService getUserService(HttpServletRequest request) {
         return (UserService) request.getSession().getAttribute("userService");
+    }
+
+    private void riseServicesForUser(HttpSession session, User user) {
+        session.setAttribute("turnService", new TurnService());
     }
 }
