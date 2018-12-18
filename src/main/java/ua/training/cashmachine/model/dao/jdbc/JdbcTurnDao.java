@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.mysql;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import ua.training.cashmachine.model.dao.TurnDao;
 import ua.training.cashmachine.model.dao.UserDao;
@@ -9,7 +9,10 @@ import ua.training.cashmachine.model.entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Optional;
+
+import static ua.training.cashmachine.model.dao.jdbc.QueryTemplate.*;
 
 public class JdbcTurnDao extends AbstractJdbcSimpleDao<Turn> implements TurnDao {
 
@@ -18,27 +21,34 @@ public class JdbcTurnDao extends AbstractJdbcSimpleDao<Turn> implements TurnDao 
     JdbcTurnDao(DataSourceConfiguration configuration, UserDao userDao) {
         super(configuration);
         this.userDao = userDao;
-        /*createQuery = () -> CREATE_USER.getQuery(locale);
-        deleteQuery = () -> DELETE_USER.getQuery(locale);
-        updateQuery = () -> UPDATE_USER.getQuery(locale);
-        findQuery = `()-> GET_TURN_BY_ID.getQuery(locale);
-        findAllQuery = () -> GET_ALL_USERS.getQuery(locale);
-        findByCredentialsQuery = () -> GET_USER_BY_CREDENTIALS.getQuery(locale);*/
+        createQuery = TURN_CREATE::getQuery;
+        deleteQuery = TURN_DELETE::getQuery;
+        updateQuery = TURN_UPDATE::getQuery;
+        findQuery = TURN_FIND_BY_ID::getQuery;
+        findAllQuery = TURN_FIND_ALL::getQuery;
+        idUpdater = Turn::setTurnId;
     }
 
     @Override
     public PreparedStatement mapCreate(PreparedStatement statement, Turn entity) throws SQLException {
-        return null;
+        statement.setInt(1, entity.getUser().getUserId());
+        statement.setLong(2, entity.getIncome());
+        statement.setTimestamp(3, Timestamp.valueOf(entity.getTimeOpened()));
+        return statement;
     }
 
     @Override
     public PreparedStatement mapUpdate(PreparedStatement statement, Turn entity) throws SQLException {
-        return null;
+        statement.setLong(1, entity.getIncome());
+        statement.setTimestamp(2, Timestamp.valueOf(entity.getTimeClosed()));
+        statement.setInt(3, entity.getUser().getUserId());
+        return statement;
     }
 
     @Override
     public PreparedStatement mapDelete(PreparedStatement statement, Turn entity) throws SQLException {
-        return null;
+        statement.setInt(1, entity.getTurnId());
+        return statement;
     }
 
     @Override

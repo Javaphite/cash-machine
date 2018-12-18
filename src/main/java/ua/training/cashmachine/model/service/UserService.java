@@ -2,7 +2,7 @@ package ua.training.cashmachine.model.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import ua.training.cashmachine.model.dao.UserDao;
-import ua.training.cashmachine.model.dao.mysql.JdbcDaoFactory;
+import ua.training.cashmachine.model.dao.jdbc.JdbcDaoFactory;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
 import ua.training.cashmachine.model.utils.LocalizationUtils;

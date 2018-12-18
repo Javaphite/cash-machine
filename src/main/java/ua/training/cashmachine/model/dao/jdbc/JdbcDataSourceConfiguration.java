@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.mysql;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.slf4j.Logger;
@@ -11,9 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
 
@@ -23,36 +21,7 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
 
     private final DataSource dataSource;
 
-    //TODO: move this enum to separate file after it grew-up to 8+ elements
-    public enum SqlTemplate {
-        GET_USER_BY_CREDENTIALS("user.find.credentials"),
-        GET_ALL_USERS("user.find.all"),
-        GET_USER_BY_ID("user.find.id"),
-        CREATE_USER("user.create"),
-        DELETE_USER("user.delete"),
-        UPDATE_USER("user.update"),
-        GET_ALL_TURNS("turn.find.all"),
-        GET_TURN_BY_ID("turn.find.id");
 
-        private final String bundleKey;
-
-        SqlTemplate(String bundleKey) {
-            this.bundleKey = bundleKey;
-        }
-
-        public String getBundleKey() {
-            return bundleKey;
-        }
-
-        public String getQuery(Locale locale) {
-            return ResourceBundle.getBundle("sql/statements", locale).getString(bundleKey);
-        }
-
-        public String getQuery() {
-            return getQuery(Locale.getDefault());
-        }
-
-    }
 
     // Private constructor to prevent instantiation
     private JdbcDataSourceConfiguration(DataSource dataSource) {

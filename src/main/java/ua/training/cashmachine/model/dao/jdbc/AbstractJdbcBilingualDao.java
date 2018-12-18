@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.mysql;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import ua.training.cashmachine.exception.UncheckedSQLException;
 import ua.training.cashmachine.model.dao.common.BilingualDao;
@@ -10,13 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 public abstract class AbstractJdbcBilingualDao<T> extends AbstractJdbcBasicDao<T>
         implements BilingualDao<T>, BilingualMapper<T> {
 
-    UnaryOperator<T> idUpdater;
+    BiConsumer<T, Integer> idUpdater;
     Supplier<String> createQuery;
     Supplier<String> updateQuery;
 
@@ -26,15 +26,15 @@ public abstract class AbstractJdbcBilingualDao<T> extends AbstractJdbcBasicDao<T
 
     @Override
     public T create(T entity, Map<String, String> localizedValues) {
-        T updatedEntity = entity;
         Connection connection = configuration.getConnection();
 
         try (PreparedStatement statement = configuration.getStatement(connection, createQuery.get())) {
-            mapCreate(statement, updatedEntity, localizedValues).executeUpdate();
+            mapCreate(statement, entity, localizedValues).executeUpdate();
 
             try (ResultSet results = statement.getGeneratedKeys()) {
                 if (results.next()) {
-                    updatedEntity = idUpdater.apply(updatedEntity);
+                    Integer entityId = results.getInt(1);
+                    idUpdater.accept(entity, entityId);
                     commitAndClose(connection);
                 } else {
                     rollbackAndClose(connection);
@@ -46,7 +46,7 @@ public abstract class AbstractJdbcBilingualDao<T> extends AbstractJdbcBasicDao<T
             rollbackAndClose(connection);
             throw new UncheckedSQLException(exception);
         }
-        return updatedEntity;
+        return entity;
     }
 
     @Override

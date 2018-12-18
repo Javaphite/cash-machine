@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.mysql;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import ua.training.cashmachine.exception.UncheckedSQLException;
 import ua.training.cashmachine.model.dao.common.DataSourceConfiguration;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static ua.training.cashmachine.model.dao.mysql.JdbcDataSourceConfiguration.SqlTemplate.*;
+import static ua.training.cashmachine.model.dao.jdbc.QueryTemplate.*;
 
 public class JdbcUserDao extends AbstractJdbcBilingualDao<User> implements UserDao {
 
@@ -23,12 +23,29 @@ public class JdbcUserDao extends AbstractJdbcBilingualDao<User> implements UserD
 
     JdbcUserDao(DataSourceConfiguration configuration, Locale locale) {
         super(configuration);
-        createQuery = () -> CREATE_USER.getQuery(locale);
-        deleteQuery = () -> DELETE_USER.getQuery(locale);
-        updateQuery = () -> UPDATE_USER.getQuery(locale);
-        findQuery = ()-> GET_USER_BY_ID.getQuery(locale);
-        findAllQuery = () -> GET_ALL_USERS.getQuery(locale);
-        findByCredentialsQuery = () -> GET_USER_BY_CREDENTIALS.getQuery(locale);
+        createQuery = () -> USER_CREATE.getQuery(locale);
+        deleteQuery = () -> USER_DELETE.getQuery(locale);
+        updateQuery = () -> USER_UPDATE.getQuery(locale);
+        findQuery = ()-> USER_FIND_BY_ID.getQuery(locale);
+        findAllQuery = () -> USER_FIND_ALL.getQuery(locale);
+        findByCredentialsQuery = () -> USER_FIND_BY_CREDENTIALS.getQuery(locale);
+        idUpdater = User::setUserId;
+    }
+
+    @Override
+    public Optional<User> find(String login, String hash) {
+        try (Connection connection = configuration.getConnection();
+             PreparedStatement statement =
+                     configuration.getStatement(connection, findByCredentialsQuery.get())) {
+            statement.setString(1, login);
+            statement.setString(2, hash);
+            try (ResultSet results = statement.executeQuery()) {
+                return Optional.ofNullable(mapFind(results));
+            }
+        } catch (SQLException exception) {
+            LOG.error("User info reading failed: ", exception);
+            throw new UncheckedSQLException(exception);
+        }
     }
 
     @Override
@@ -78,22 +95,5 @@ public class JdbcUserDao extends AbstractJdbcBilingualDao<User> implements UserD
             user.setHash(User.DEFAULT_HASH);
         }
         return user;
-    }
-
-    //TODO: test me (manual test successful)
-    @Override
-    public Optional<User> find(String login, String hash) {
-        try (Connection connection = configuration.getConnection();
-             PreparedStatement statement =
-                     configuration.getStatement(connection, findByCredentialsQuery.get())) {
-            statement.setString(1, login);
-            statement.setString(2, hash);
-            try (ResultSet results = statement.executeQuery()) {
-                return Optional.ofNullable(mapFind(results));
-            }
-        } catch (SQLException exception) {
-            LOG.error("User info reading failed: ", exception);
-            throw new UncheckedSQLException(exception);
-        }
     }
 }
