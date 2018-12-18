@@ -1,6 +1,7 @@
 package ua.training.cashmachine.model.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import ua.training.cashmachine.model.annotation.ServiceScope;
 import ua.training.cashmachine.model.dao.UserDao;
 import ua.training.cashmachine.model.dao.jdbc.JdbcDaoFactory;
 import ua.training.cashmachine.model.entity.Role;
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+@ServiceScope(ServiceScope.SESSION)
 public class UserService {
 
     public Optional<User> getUserByCredentials(String login, String pass, Locale locale) {
