@@ -16,6 +16,8 @@ public enum QueryTemplate {
     TURN_DELETE("turn.delete"),
     TURN_UPDATE("turn.update");
 
+    private static final String QUERIES_BUNDLE = "sql/statements";
+
     private final String bundleKey;
 
     QueryTemplate(String bundleKey) {
@@ -27,7 +29,7 @@ public enum QueryTemplate {
     }
 
     public String getQuery(Locale locale) {
-        return ResourceBundle.getBundle("sql/statements", locale).getString(bundleKey);
+        return ResourceBundle.getBundle(QUERIES_BUNDLE, locale).getString(bundleKey);
     }
 
     public String getQuery() {
