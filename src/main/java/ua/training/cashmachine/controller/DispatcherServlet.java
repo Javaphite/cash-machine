@@ -1,5 +1,6 @@
 package ua.training.cashmachine.controller;
 
+import javafx.util.Pair;
 import ua.training.cashmachine.controller.command.HttpServletCommand;
 import ua.training.cashmachine.controller.util.RequestInfoUtil;
 import ua.training.cashmachine.model.entity.Role;
@@ -33,5 +34,15 @@ public class DispatcherServlet extends HttpServlet {
 
     private static HttpServletCommand resolveCommand(HttpServletRequest req) {
         return Activity.commandOf(RequestInfoUtil.getActualPath(req), req.getParameter("command"));
+    }
+
+    public static void forward(String pageName, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher(pageName).forward(request, response);
+    }
+
+    public static void redirect(String path, HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.sendRedirect(request.getContextPath() + path);
     }
 }

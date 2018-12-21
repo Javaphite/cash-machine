@@ -1,5 +1,6 @@
 package ua.training.cashmachine.controller.command;
 
+import ua.training.cashmachine.controller.DispatcherServlet;
 import ua.training.cashmachine.controller.dto.Alert;
 import ua.training.cashmachine.model.entity.User;
 
@@ -20,7 +21,7 @@ public class MainMenu implements HttpServletCommand {
         Alert alert = new Alert("Welcome, ", getWelcomeMessage(user), Alert.Type.INFO);
         request.setAttribute("alert", alert);
 
-        HttpServletCommand.forward("main", request, response);
+        DispatcherServlet.forward("main", request, response);
     }
 
     private String getWelcomeMessage(User user) {

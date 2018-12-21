@@ -2,7 +2,6 @@ package ua.training.cashmachine.model.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import ua.training.cashmachine.model.annotation.Localized;
-import ua.training.cashmachine.model.annotation.WriteOnly;
 
 import java.util.Objects;
 
@@ -13,7 +12,7 @@ public class User {
     private int userId;
     private String login;
     private Role role;
-    @WriteOnly private String hash;
+    private String hash;
     @Localized private String firstName;
     @Localized private String lastName;
     private boolean expired;

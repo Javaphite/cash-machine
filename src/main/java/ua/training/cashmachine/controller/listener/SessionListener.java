@@ -1,6 +1,5 @@
 package ua.training.cashmachine.controller.listener;
 
-import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
 import ua.training.cashmachine.model.service.UserService;
 

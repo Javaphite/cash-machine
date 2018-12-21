@@ -1,5 +1,6 @@
 package ua.training.cashmachine.controller.command;
 
+import ua.training.cashmachine.controller.DispatcherServlet;
 import ua.training.cashmachine.model.entity.User;
 import ua.training.cashmachine.model.service.UserService;
 
@@ -30,6 +31,6 @@ public class Logout implements HttpServletCommand {
             session.getServletContext().setAttribute("users", activeUsers);
         }
 
-        HttpServletCommand.redirect("/", request, response);
+        DispatcherServlet.redirect("/", request, response);
     }
 }

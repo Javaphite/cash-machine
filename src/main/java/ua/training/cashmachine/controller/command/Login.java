@@ -1,5 +1,8 @@
 package ua.training.cashmachine.controller.command;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.training.cashmachine.controller.DispatcherServlet;
 import ua.training.cashmachine.controller.dto.Alert;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
@@ -17,6 +20,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class Login implements HttpServletCommand {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Login.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -36,7 +41,7 @@ public class Login implements HttpServletCommand {
 
             activeUsers.add(user.getLogin());
             session.getServletContext().setAttribute("users", activeUsers);
-            HttpServletCommand.redirect("main", request, response);
+            DispatcherServlet.redirect("main", request, response);
         } else {
             String warningMessage = optionalUser.isPresent()?
                     "user already logged in.":
@@ -46,7 +51,7 @@ public class Login implements HttpServletCommand {
             LOG.warn("Authorization failed: {} ({})", warningMessage, login);
 
             request.setAttribute("alert", alert);
-            HttpServletCommand.forward("index", request, response);
+            DispatcherServlet.forward("index", request, response);
         }
     }
 
