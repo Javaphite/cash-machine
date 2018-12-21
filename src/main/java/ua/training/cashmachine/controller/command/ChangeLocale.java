@@ -1,5 +1,6 @@
 package ua.training.cashmachine.controller.command;
 
+import ua.training.cashmachine.controller.DispatcherServlet;
 import ua.training.cashmachine.controller.dto.Alert;
 import ua.training.cashmachine.controller.util.RequestInfoUtil;
 import ua.training.cashmachine.model.entity.User;
@@ -32,6 +33,6 @@ public class ChangeLocale implements HttpServletCommand {
                     "during locale change - changes were discarded.", Alert.Type.DANGER);
             request.setAttribute("alert", alert);
         }
-        HttpServletCommand.redirect(RequestInfoUtil.getActualPath(request), request, response);
+        DispatcherServlet.redirect(RequestInfoUtil.getActualPath(request), request, response);
     }
 }
