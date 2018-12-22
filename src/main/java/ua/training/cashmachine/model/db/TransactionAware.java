@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.common;
+package ua.training.cashmachine.model.db;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

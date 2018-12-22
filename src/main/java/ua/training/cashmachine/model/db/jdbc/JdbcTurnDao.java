@@ -1,8 +1,9 @@
-package ua.training.cashmachine.model.dao.jdbc;
+package ua.training.cashmachine.model.db.jdbc;
 
-import ua.training.cashmachine.model.dao.TurnDao;
-import ua.training.cashmachine.model.dao.UserDao;
-import ua.training.cashmachine.model.dao.common.DataSourceConfiguration;
+import ua.training.cashmachine.model.db.dao.TurnDao;
+import ua.training.cashmachine.model.db.dao.UserDao;
+import ua.training.cashmachine.model.db.DataSourceConfiguration;
+import ua.training.cashmachine.model.db.mapper.GenericMapper;
 import ua.training.cashmachine.model.entity.Turn;
 import ua.training.cashmachine.model.entity.User;
 
@@ -10,16 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Locale;
 import java.util.Optional;
 
-import static ua.training.cashmachine.model.dao.jdbc.QueryTemplate.*;
+import static ua.training.cashmachine.model.db.jdbc.QueryTemplate.*;
 
-public class JdbcTurnDao extends AbstractJdbcSimpleDao<Turn> implements TurnDao {
+public class JdbcTurnDao extends AbstractJdbcDao<Turn> implements TurnDao {
 
     private UserDao userDao;
 
-    JdbcTurnDao(DataSourceConfiguration configuration, UserDao userDao) {
-        super(configuration);
+    JdbcTurnDao(DataSourceConfiguration configuration, GenericMapper<Turn> mapper, Locale locale, UserDao userDao) {
+        super(configuration, mapper, locale);
         this.userDao = userDao;
         createQuery = TURN_CREATE::getQuery;
         deleteQuery = TURN_DELETE::getQuery;
@@ -28,7 +30,7 @@ public class JdbcTurnDao extends AbstractJdbcSimpleDao<Turn> implements TurnDao 
         findAllQuery = TURN_FIND_ALL::getQuery;
         idUpdater = Turn::setTurnId;
     }
-
+/*
     @Override
     public PreparedStatement mapCreate(PreparedStatement statement, Turn entity) throws SQLException {
         statement.setInt(1, entity.getUser().getUserId());
@@ -64,5 +66,5 @@ public class JdbcTurnDao extends AbstractJdbcSimpleDao<Turn> implements TurnDao 
             turn.setTimeClosed(resultSet.getTimestamp(5).toLocalDateTime());
         }
         return turn;
-    }
+    }*/
 }

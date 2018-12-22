@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.common;
+package ua.training.cashmachine.model.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

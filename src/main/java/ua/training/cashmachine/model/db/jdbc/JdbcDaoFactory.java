@@ -1,10 +1,14 @@
-package ua.training.cashmachine.model.dao.jdbc;
+package ua.training.cashmachine.model.db.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.training.cashmachine.model.dao.DaoFactory;
-import ua.training.cashmachine.model.dao.TurnDao;
-import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.db.dao.DaoFactory;
+import ua.training.cashmachine.model.db.dao.TurnDao;
+import ua.training.cashmachine.model.db.dao.UserDao;
+import ua.training.cashmachine.model.db.mapper.GenericMapper;
+import ua.training.cashmachine.model.db.mapper.UserMapper;
+import ua.training.cashmachine.model.entity.Turn;
+import ua.training.cashmachine.model.entity.User;
 
 import java.util.Locale;
 
@@ -30,12 +34,12 @@ public final class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public UserDao getUserDao(Locale locale) {
-        return new JdbcUserDao(JdbcDataSourceConfiguration.getInstance(), locale);
+    public UserDao getUserDao(UserMapper mapper, Locale locale) {
+        return new JdbcUserDao(JdbcDataSourceConfiguration.getInstance(), mapper, locale);
     }
 
-    @Override
-    public TurnDao getTurnDao(Locale locale) {
+    /*@Override
+    public TurnDao getTurnDao(GenericMapper<Turn> mapper, Locale locale) {
         return new JdbcTurnDao(JdbcDataSourceConfiguration.getInstance(), getUserDao(locale));
-    }
+    }*/
 }

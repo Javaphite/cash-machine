@@ -1,10 +1,10 @@
-package ua.training.cashmachine.model.dao.jdbc;
+package ua.training.cashmachine.model.db.jdbc;
 
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.dao.common.DataSourceConfiguration;
+import ua.training.cashmachine.model.db.DataSourceConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -21,8 +21,6 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
 
     private final DataSource dataSource;
 
-
-
     // Private constructor to prevent instantiation
     private JdbcDataSourceConfiguration(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -38,7 +36,7 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
-                    pooledDataSource.setPassword("----");
+                    pooledDataSource.setPassword("Grammar@109");
                     instance = new JdbcDataSourceConfiguration(pooledDataSource);
                 }
             }

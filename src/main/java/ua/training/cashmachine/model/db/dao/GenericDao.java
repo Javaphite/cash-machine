@@ -1,9 +1,13 @@
-package ua.training.cashmachine.model.dao.common;
+package ua.training.cashmachine.model.db.dao;
 
 import java.util.Collection;
 import java.util.Optional;
 
-public interface BasicDao<T> extends TransactionAware {
+public interface GenericDao<T> {
+
+    T create(T entity);
+
+    boolean update(T entity);
 
     boolean delete(T entity);
 

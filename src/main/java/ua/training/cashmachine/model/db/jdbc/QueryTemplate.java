@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.dao.jdbc;
+package ua.training.cashmachine.model.db.jdbc;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
