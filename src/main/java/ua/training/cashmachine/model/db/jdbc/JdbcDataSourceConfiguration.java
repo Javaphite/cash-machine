@@ -4,20 +4,16 @@ import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.db.DataSourceConfiguration;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Objects;
 
-final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
+final class JdbcDataSourceConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(JdbcDataSourceConfiguration.class);
 
-    private static volatile DataSourceConfiguration instance;
+    private static volatile JdbcDataSourceConfiguration instance;
 
     private final DataSource dataSource;
 
@@ -28,7 +24,7 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
 
     //Todo: read full config from property file
     //TODO: log me
-    static DataSourceConfiguration getInstance() {
+    static JdbcDataSourceConfiguration getInstance() {
         if (null == instance) {
             synchronized (JdbcDataSourceConfiguration.class) {
                 if (null == instance) {
@@ -36,7 +32,7 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
-                    pooledDataSource.setPassword("Grammar@109");
+                    pooledDataSource.setPassword("----");
                     instance = new JdbcDataSourceConfiguration(pooledDataSource);
                 }
             }
@@ -44,7 +40,6 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
         return instance;
     }
 
-    @Override
     public Connection getConnection() {
         try {
             Connection connection = dataSource.getConnection();
@@ -56,13 +51,5 @@ final class JdbcDataSourceConfiguration implements DataSourceConfiguration {
         }
     }
 
-    @Override
-    public PreparedStatement getStatement(Connection connection, String query) {
-        try {
-            return Objects.requireNonNull(connection).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        } catch (SQLException exception) {
-            LOG.error("Statement creation failed: ", exception);
-            throw new UncheckedSQLException(exception);
-        }
-    }
+
 }

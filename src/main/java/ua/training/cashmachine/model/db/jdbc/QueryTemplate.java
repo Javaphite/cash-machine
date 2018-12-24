@@ -1,5 +1,8 @@
 package ua.training.cashmachine.model.db.jdbc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -16,7 +19,8 @@ public enum QueryTemplate {
     TURN_DELETE("turn.delete"),
     TURN_UPDATE("turn.update");
 
-    private static final String QUERIES_BUNDLE = "sql/statements";
+    private static final Logger LOG = LoggerFactory.getLogger(QueryTemplate.class);
+    private static final String QUERIES_BUNDLE = "queries";
 
     private final String bundleKey;
 
@@ -24,15 +28,8 @@ public enum QueryTemplate {
         this.bundleKey = bundleKey;
     }
 
-    public String getBundleKey() {
-        return bundleKey;
-    }
-
-    public String getQuery(Locale locale) {
+    public String get(Locale locale) {
+        LOG.debug("Retrieving query with key: {}, locale: {}", bundleKey, locale);
         return ResourceBundle.getBundle(QUERIES_BUNDLE, locale).getString(bundleKey);
-    }
-
-    public String getQuery() {
-        return getQuery(Locale.getDefault());
     }
 }
