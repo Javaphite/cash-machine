@@ -68,26 +68,24 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
     }
 
     @Override
-    public boolean update(T entity) {
+    public void update(T entity) {
         try (PreparedStatement statement = statementOf(updateQuery.get(locale))) {
             mapper.mapUpdate(statement, entity).executeUpdate();
             commit();
-            return true;
         } catch (SQLException exception) {
             LOG.error("Entity update failed: ", exception);
-            return false;
+            throw new UncheckedSQLException(exception);
         }
     }
 
     @Override
-    public boolean delete(T entity) {
+    public void delete(T entity) {
         try (PreparedStatement statement = statementOf(deleteQuery.get(locale))) {
             mapper.mapDelete(statement, entity).executeUpdate();
             commit();
-            return true;
         } catch (SQLException exception) {
             LOG.error("Entity delete failed: ", exception);
-            return false;
+            throw new UncheckedSQLException(exception);
         }
     }
 
@@ -121,14 +119,6 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
     }
 
     PreparedStatement statementOf(String query) {

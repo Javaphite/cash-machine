@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface LocalizationDao<T> extends GenericDao<T> {
 
-    boolean updateLocalization(T entity, Map<Locale, Map<String, String>> localizationTable);
+    void updateLocalization(T entity, Map<Locale, Map<String, String>> localizationTable);
 }

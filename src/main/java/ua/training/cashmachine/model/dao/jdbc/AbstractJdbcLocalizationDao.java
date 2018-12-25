@@ -23,12 +23,11 @@ public abstract class AbstractJdbcLocalizationDao<T> extends AbstractJdbcDao<T> 
     }
 
     @Override
-    public boolean updateLocalization(T entity, Map<Locale, Map<String, String>> localizationTable) {
+    public void updateLocalization(T entity, Map<Locale, Map<String, String>> localizationTable) {
         LocalizationMapper<T> localizationMapper = (LocalizationMapper<T>) mapper;
         try (PreparedStatement statement = statementOf(updateLocalizationQuery.get(locale))) {
             localizationMapper.mapLocalization(statement, entity, localizationTable).executeUpdate();
             commit();
-            return true;
         } catch (SQLException exception) {
             LOG.error("Localization update failed: ", exception);
             rollback();
