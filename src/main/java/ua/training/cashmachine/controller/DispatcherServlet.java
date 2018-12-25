@@ -38,11 +38,12 @@ public class DispatcherServlet extends HttpServlet {
 
     public static void forward(String pageName, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher(pageName).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/" + pageName + ".jsp").forward(request, response);
     }
 
     public static void redirect(String path, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        response.sendRedirect(request.getContextPath() + path);
+        String transformedPath = ('/'==path.charAt(0))? path: ('/' + path);
+        response.sendRedirect(request.getContextPath() + transformedPath);
     }
 }

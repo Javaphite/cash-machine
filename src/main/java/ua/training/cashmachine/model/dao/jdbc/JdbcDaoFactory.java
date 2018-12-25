@@ -8,7 +8,6 @@ import ua.training.cashmachine.model.dao.TurnDao;
 import ua.training.cashmachine.model.dao.UserDao;
 import ua.training.cashmachine.model.dao.mapper.TurnMapper;
 import ua.training.cashmachine.model.dao.mapper.UserMapper;
-import ua.training.cashmachine.model.entity.Turn;
 
 import java.util.Locale;
 
