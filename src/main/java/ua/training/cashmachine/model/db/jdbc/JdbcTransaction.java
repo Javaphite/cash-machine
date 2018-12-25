@@ -15,7 +15,13 @@ public class JdbcTransaction implements Transaction {
     private final Connection connection;
 
     JdbcTransaction(Connection connection) {
-        this.connection = connection;
+        try {
+            connection.setAutoCommit(false);
+            this.connection = connection;
+        } catch (SQLException exception) {
+            LOG.error("Autocommit mode cannot be disabled: ", exception);
+            throw new UncheckedSQLException(exception);
+        }
     }
 
     public Connection getConnection() {
