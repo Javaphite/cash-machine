@@ -2,9 +2,7 @@ package ua.training.cashmachine.model.db.dao;
 
 
 
-public interface Transaction {
-
-    void append(GenericDao<?> dao);
+public interface Transaction extends AutoCloseable {
 
     void commitTransaction() throws Exception;
 
