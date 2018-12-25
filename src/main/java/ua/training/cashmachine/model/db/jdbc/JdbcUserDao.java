@@ -14,18 +14,28 @@ import java.util.Optional;
 
 import static ua.training.cashmachine.model.db.jdbc.QueryTemplate.*;
 
-public class JdbcUserDao extends AbstractJdbcDao<User> implements UserDao {
+public class JdbcUserDao extends AbstractJdbcLocalizationDao<User> implements UserDao {
 
     private QueryTemplate findByCredentialsQuery;
 
     JdbcUserDao(Connection connection, UserMapper mapper, Locale locale) {
         super(connection, mapper, locale);
+        setupDaoConfiguration();
+    }
+
+    JdbcUserDao(JdbcTransaction transaction, UserMapper mapper, Locale locale) {
+        super(transaction, mapper, locale);
+        setupDaoConfiguration();
+    }
+
+    private void setupDaoConfiguration() {
         createQuery = USER_CREATE;
         deleteQuery = USER_DELETE;
         updateQuery = USER_UPDATE;
         findQuery = USER_FIND_BY_ID;
         findAllQuery = USER_FIND_ALL;
         findByCredentialsQuery = USER_FIND_BY_CREDENTIALS;
+        updateLocalizationQuery = USER_LOCALIZATION_UPDATE;
         idUpdater = User::setUserId;
     }
 

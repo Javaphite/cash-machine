@@ -13,6 +13,7 @@ public enum QueryTemplate {
     USER_CREATE("user.create"),
     USER_DELETE("user.delete"),
     USER_UPDATE("user.update"),
+    USER_LOCALIZATION_UPDATE("user.localization"),
     TURN_FIND_ALL("turn.find.all"),
     TURN_FIND_BY_ID("turn.find.id"),
     TURN_CREATE("turn.create"),

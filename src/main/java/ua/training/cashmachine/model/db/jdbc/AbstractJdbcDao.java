@@ -41,6 +41,13 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
         this.locale = locale;
     }
 
+    AbstractJdbcDao(JdbcTransaction transaction, GenericMapper<T> mapper, Locale locale) {
+        this.transaction = transaction;
+        this.connection = transaction.getConnection();
+        this.mapper = mapper;
+        this.locale = locale;
+    }
+
     @Override
     public T create(T entity) {
         try (PreparedStatement statement = statementOf(createQuery.get(locale))) {
@@ -55,7 +62,6 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
             }
         } catch (SQLException exception) {
             LOG.error("Entity creation failed: ", exception);
-            rollback();
             throw new UncheckedSQLException(exception);
         }
         return entity;
@@ -69,7 +75,6 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
             return true;
         } catch (SQLException exception) {
             LOG.error("Entity update failed: ", exception);
-            rollback();
             return false;
         }
     }
@@ -82,7 +87,6 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
             return true;
         } catch (SQLException exception) {
             LOG.error("Entity delete failed: ", exception);
-            rollback();
             return false;
         }
     }
@@ -154,6 +158,19 @@ public abstract class AbstractJdbcDao<T> implements GenericDao<T> {
             }
         } catch (SQLException exception) {
             LOG.error("Query rollback failed: ", exception);
+            throw new UncheckedSQLException(exception);
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            if(!connection.isClosed()) {
+                connection.rollback();
+                connection.close();
+            }
+        } catch (SQLException exception) {
+            LOG.error("Dao connection closing failed: ", exception);
             throw new UncheckedSQLException(exception);
         }
     }
