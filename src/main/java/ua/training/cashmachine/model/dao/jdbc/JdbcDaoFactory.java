@@ -1,17 +1,12 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.training.cashmachine.model.db.dao.DaoFactory;
-import ua.training.cashmachine.model.db.dao.Transaction;
-import ua.training.cashmachine.model.db.dao.TurnDao;
-import ua.training.cashmachine.model.db.dao.UserDao;
-import ua.training.cashmachine.model.db.mapper.GenericMapper;
-import ua.training.cashmachine.model.db.mapper.UserMapper;
-import ua.training.cashmachine.model.entity.Turn;
-import ua.training.cashmachine.model.entity.User;
+import ua.training.cashmachine.model.dao.DaoFactory;
+import ua.training.cashmachine.model.dao.Transaction;
+import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.mapper.UserMapper;
 
-import java.sql.Connection;
 import java.util.Locale;
 
 //TODO: doc me

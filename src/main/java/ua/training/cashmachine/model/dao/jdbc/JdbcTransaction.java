@@ -1,9 +1,9 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.db.dao.Transaction;
+import ua.training.cashmachine.model.dao.Transaction;
 
 import java.sql.Connection;
 import java.sql.SQLException;

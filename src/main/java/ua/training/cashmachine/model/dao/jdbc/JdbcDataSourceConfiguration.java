@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import org.slf4j.Logger;

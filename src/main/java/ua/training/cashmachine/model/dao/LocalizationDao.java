@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.db.dao;
+package ua.training.cashmachine.model.dao;
 
 import java.util.Locale;
 import java.util.Map;

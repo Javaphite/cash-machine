@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.db.mapper;
+package ua.training.cashmachine.model.dao.mapper;
 
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;

@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.db.dao;
+package ua.training.cashmachine.model.dao;
 
 import ua.training.cashmachine.model.entity.Turn;
 

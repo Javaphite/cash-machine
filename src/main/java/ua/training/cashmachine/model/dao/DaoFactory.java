@@ -1,6 +1,6 @@
-package ua.training.cashmachine.model.db.dao;
+package ua.training.cashmachine.model.dao;
 
-import ua.training.cashmachine.model.db.mapper.UserMapper;
+import ua.training.cashmachine.model.dao.mapper.UserMapper;
 
 import java.util.Locale;
 

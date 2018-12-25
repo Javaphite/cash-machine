@@ -1,20 +1,14 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
-import ua.training.cashmachine.model.db.dao.TurnDao;
-import ua.training.cashmachine.model.db.dao.UserDao;
-import ua.training.cashmachine.model.db.DataSourceConfiguration;
-import ua.training.cashmachine.model.db.mapper.GenericMapper;
+import ua.training.cashmachine.model.dao.TurnDao;
+import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.DataSourceConfiguration;
+import ua.training.cashmachine.model.dao.mapper.GenericMapper;
 import ua.training.cashmachine.model.entity.Turn;
-import ua.training.cashmachine.model.entity.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Locale;
-import java.util.Optional;
 
-import static ua.training.cashmachine.model.db.jdbc.QueryTemplate.*;
+import static ua.training.cashmachine.model.dao.jdbc.QueryTemplate.*;
 
 public class JdbcTurnDao extends AbstractJdbcDao<Turn> implements TurnDao {
 

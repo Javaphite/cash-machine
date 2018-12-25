@@ -4,11 +4,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.model.annotation.ServiceScope;
-import ua.training.cashmachine.model.db.dao.DaoFactory;
-import ua.training.cashmachine.model.db.dao.Transaction;
-import ua.training.cashmachine.model.db.dao.UserDao;
-import ua.training.cashmachine.model.db.jdbc.JdbcDaoFactory;
-import ua.training.cashmachine.model.db.mapper.UserMapper;
+import ua.training.cashmachine.model.dao.DaoFactory;
+import ua.training.cashmachine.model.dao.Transaction;
+import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.jdbc.JdbcDaoFactory;
+import ua.training.cashmachine.model.dao.mapper.UserMapper;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
 

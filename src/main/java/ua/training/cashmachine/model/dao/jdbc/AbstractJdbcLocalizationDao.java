@@ -1,8 +1,8 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.db.dao.LocalizationDao;
-import ua.training.cashmachine.model.db.mapper.LocalizationMapper;
+import ua.training.cashmachine.model.dao.LocalizationDao;
+import ua.training.cashmachine.model.dao.mapper.LocalizationMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

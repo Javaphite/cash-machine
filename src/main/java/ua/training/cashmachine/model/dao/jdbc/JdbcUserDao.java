@@ -1,8 +1,8 @@
-package ua.training.cashmachine.model.db.jdbc;
+package ua.training.cashmachine.model.dao.jdbc;
 
 import ua.training.cashmachine.exception.UncheckedSQLException;
-import ua.training.cashmachine.model.db.dao.UserDao;
-import ua.training.cashmachine.model.db.mapper.UserMapper;
+import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.mapper.UserMapper;
 import ua.training.cashmachine.model.entity.User;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Optional;
 
-import static ua.training.cashmachine.model.db.jdbc.QueryTemplate.*;
+import static ua.training.cashmachine.model.dao.jdbc.QueryTemplate.*;
 
 public class JdbcUserDao extends AbstractJdbcLocalizationDao<User> implements UserDao {
 

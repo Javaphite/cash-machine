@@ -1,4 +1,4 @@
-package ua.training.cashmachine.model.db.mapper;
+package ua.training.cashmachine.model.dao.mapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
