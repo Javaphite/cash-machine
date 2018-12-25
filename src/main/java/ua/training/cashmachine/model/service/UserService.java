@@ -11,9 +11,7 @@ import ua.training.cashmachine.model.db.jdbc.JdbcDaoFactory;
 import ua.training.cashmachine.model.db.mapper.UserMapper;
 import ua.training.cashmachine.model.entity.Role;
 import ua.training.cashmachine.model.entity.User;
-import ua.training.cashmachine.model.utils.LocalizationUtils;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;

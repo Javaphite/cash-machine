@@ -23,7 +23,7 @@ public class User {
             return true;
         }
 
-        if ( (null == obj) || Objects.equals(getClass(),obj.getClass()) ) {
+        if ( (null == obj) || Objects.equals(getClass(), obj.getClass()) ) {
             return false;
         }
 

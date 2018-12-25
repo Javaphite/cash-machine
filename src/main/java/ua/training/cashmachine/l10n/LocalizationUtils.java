@@ -1,12 +1,8 @@
-package ua.training.cashmachine.model.utils;
+package ua.training.cashmachine.l10n;
 
 import ua.training.cashmachine.model.annotation.Localized;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
