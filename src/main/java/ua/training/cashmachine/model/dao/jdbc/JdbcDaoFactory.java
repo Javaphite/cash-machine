@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.model.dao.DaoFactory;
 import ua.training.cashmachine.model.dao.Transaction;
+import ua.training.cashmachine.model.dao.TurnDao;
 import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.mapper.TurnMapper;
 import ua.training.cashmachine.model.dao.mapper.UserMapper;
+import ua.training.cashmachine.model.entity.Turn;
 
 import java.util.Locale;
 
@@ -45,8 +48,13 @@ public final class JdbcDaoFactory implements DaoFactory {
         return new JdbcUserDao((JdbcTransaction) transaction, mapper, locale);
     }
 
-    /*@Override
-    public TurnDao getTurnDao(GenericMapper<Turn> mapper, Locale locale) {
-        return new JdbcTurnDao(JdbcDataSourceConfiguration.getInstance(), getUserDao(locale));
-    }*/
+    @Override
+    public TurnDao getTurnDao(TurnMapper mapper, Locale locale) {
+        return new JdbcTurnDao(JdbcDataSourceConfiguration.getInstance().getConnection(), mapper, locale);
+    }
+
+    @Override
+    public TurnDao getTurnDao(TurnMapper mapper, Locale locale, Transaction transaction) {
+        return new JdbcTurnDao((JdbcTransaction) transaction, mapper, locale);
+    }
 }
