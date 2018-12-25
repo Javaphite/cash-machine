@@ -3,7 +3,7 @@ package ua.training.cashmachine.model.db.dao;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface GenericDao<T> {
+public interface GenericDao<T> extends AutoCloseable {
 
     T create(T entity);
 
