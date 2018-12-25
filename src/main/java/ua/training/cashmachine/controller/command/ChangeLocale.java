@@ -27,7 +27,7 @@ public class ChangeLocale implements HttpServletCommand {
         if(null != localeTag) {
             Locale locale = Locale.forLanguageTag(localeTag);
             session.setAttribute("locale", locale);
-            session.setAttribute("user", service.updateUserLocale(user, locale));
+            session.setAttribute("user", service.switchUserLocale(user, locale));
         } else {
             Alert alert = new Alert("Error occurred ",
                     "during locale change - changes were discarded.", Alert.Type.DANGER);
