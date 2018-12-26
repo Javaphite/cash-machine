@@ -24,7 +24,18 @@ public enum QueryTemplate {
     INVOICE_CREATE("invoice.create"),
     INVOICE_DELETE("invoice.delete"),
     INVOICE_UPDATE("invoice.update"),
-    INVOICE_UPDATE_PRODUCTS("invoice.m2m.create");
+    INVOICE_UPDATE_PRODUCTS("invoice.m2m.create"),
+    PRODUCT_FIND_ALL("product.find.all"),
+    PRODUCT_FIND_BY_ID("product.find.id"),
+    PRODUCT_CREATE("product.create"),
+    PRODUCT_DELETE("product.delete"),
+    PRODUCT_UPDATE("product.update"),
+    PRODUCT_LOCALIZATION_UPDATE("product.localization"),
+    SUPPLY_FIND_ALL("supply.find.all"),
+    SUPPLY_FIND_BY_ID("supply.find.id"),
+    SUPPLY_CREATE("supply.create"),
+    SUPPLY_DELETE("supply.delete"),
+    SUPPLY_UPDATE("supply.update");
 
     private static final Logger LOG = LoggerFactory.getLogger(QueryTemplate.class);
     private static final String QUERIES_BUNDLE = "queries";

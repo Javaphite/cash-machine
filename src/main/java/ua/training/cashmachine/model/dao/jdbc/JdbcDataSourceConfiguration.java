@@ -32,7 +32,7 @@ final class JdbcDataSourceConfiguration {
                     MysqlConnectionPoolDataSource pooledDataSource = new MysqlConnectionPoolDataSource();
                     pooledDataSource.setUrl(url);
                     pooledDataSource.setUser("root");
-                    pooledDataSource.setPassword("----");
+                    pooledDataSource.setPassword("Grammar@109");
                     instance = new JdbcDataSourceConfiguration(pooledDataSource);
                 }
             }
