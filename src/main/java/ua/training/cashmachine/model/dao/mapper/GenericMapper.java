@@ -15,6 +15,7 @@ public interface GenericMapper<T> {
     //TODO: Doc me
     PreparedStatement mapCreate(PreparedStatement statement, T entity) throws SQLException;
 
+    //TODO: Doc me
     PreparedStatement mapUpdate(PreparedStatement statement, T entity) throws SQLException;
 
     //ToDo: DOC ME
@@ -36,6 +37,7 @@ public interface GenericMapper<T> {
      * @return {@link Collection} of entity instances or empty one if {@code resultSet} was empty.
      * @throws SQLException in case of problems during connection to DB.
      */
+    //TODO: log me
     default Collection<T> mapFindAll(ResultSet resultSet) throws SQLException {
         Collection<T> entities = new LinkedList<>();
         while (!resultSet.isAfterLast()) {
