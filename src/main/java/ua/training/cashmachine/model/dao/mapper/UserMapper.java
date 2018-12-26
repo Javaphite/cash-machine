@@ -58,13 +58,13 @@ public class UserMapper implements LocalizationMapper<User> {
     @Override
     public PreparedStatement mapLocalization(PreparedStatement statement, User entity,
                                              Map<Locale, Map<String, String>> localizationTable) throws SQLException {
-        Map<String, String> localizedValuesUk = localizationTable.get(Locale.forLanguageTag("uk-UA"));
-        Map<String, String> localizedValuesEn = localizationTable.get(Locale.forLanguageTag("en-US"));
-        if(Objects.nonNull(localizedValuesUk) && Objects.nonNull(localizedValuesEn)) {
-            statement.setString(1, localizedValuesEn.get("firstName"));
-            statement.setString(2, localizedValuesEn.get("lastName"));
-            statement.setString(3, localizedValuesUk.get("firstName"));
-            statement.setString(4, localizedValuesUk.get("lastName"));
+        Map<String, String> enValues = localizationTable.get(Locale.forLanguageTag("uk-UA"));
+        Map<String, String> ukValues = localizationTable.get(Locale.forLanguageTag("en-US"));
+        if(Objects.nonNull(enValues) && Objects.nonNull(ukValues)) {
+            statement.setString(1, ukValues.get("firstName"));
+            statement.setString(2, ukValues.get("lastName"));
+            statement.setString(3, enValues.get("firstName"));
+            statement.setString(4, enValues.get("lastName"));
             statement.setInt(5, entity.getUserId());
         }
         return statement;
