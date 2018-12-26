@@ -3,9 +3,15 @@ package ua.training.cashmachine.model.dao.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.cashmachine.model.dao.DaoFactory;
+import ua.training.cashmachine.model.dao.InvoiceDao;
+import ua.training.cashmachine.model.dao.ProductDao;
+import ua.training.cashmachine.model.dao.SupplyDao;
 import ua.training.cashmachine.model.dao.Transaction;
 import ua.training.cashmachine.model.dao.TurnDao;
 import ua.training.cashmachine.model.dao.UserDao;
+import ua.training.cashmachine.model.dao.mapper.InvoiceMapper;
+import ua.training.cashmachine.model.dao.mapper.ProductMapper;
+import ua.training.cashmachine.model.dao.mapper.SupplyMapper;
 import ua.training.cashmachine.model.dao.mapper.TurnMapper;
 import ua.training.cashmachine.model.dao.mapper.UserMapper;
 
@@ -55,5 +61,35 @@ public final class JdbcDaoFactory implements DaoFactory {
     @Override
     public TurnDao getTurnDao(TurnMapper mapper, Locale locale, Transaction transaction) {
         return new JdbcTurnDao((JdbcTransaction) transaction, mapper, locale);
+    }
+
+    @Override
+    public ProductDao getProductDao(ProductMapper mapper, Locale locale) {
+        return null;//new JdbcProductDao(JdbcDataSourceConfiguration.getInstance().getConnection(), mapper, locale);
+    }
+
+    @Override
+    public ProductDao getProductDao(ProductMapper mapper, Locale locale, Transaction transaction) {
+        return null;//new JdbcProductDao((JdbcTransaction) transaction, mapper, locale);
+    }
+
+    @Override
+    public InvoiceDao getInvoiceDao(InvoiceMapper mapper, Locale locale) {
+        return null;
+    }
+
+    @Override
+    public InvoiceDao getInvoiceDao(InvoiceMapper mapper, Locale locale, Transaction transaction) {
+        return null;
+    }
+
+    @Override
+    public SupplyDao getSupplyDao(SupplyMapper mapper, Locale locale) {
+        return null;
+    }
+
+    @Override
+    public SupplyDao getSupplyDao(SupplyMapper mapper, Locale locale, Transaction transaction) {
+        return null;
     }
 }

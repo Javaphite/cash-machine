@@ -18,7 +18,13 @@ public enum QueryTemplate {
     TURN_FIND_BY_ID("turn.find.id"),
     TURN_CREATE("turn.create"),
     TURN_DELETE("turn.delete"),
-    TURN_UPDATE("turn.update");
+    TURN_UPDATE("turn.update"),
+    INVOICE_FIND_ALL("invoice.find.all"),
+    INVOICE_FIND_BY_ID("invoice.find.id"),
+    INVOICE_CREATE("invoice.create"),
+    INVOICE_DELETE("invoice.delete"),
+    INVOICE_UPDATE("invoice.update"),
+    INVOICE_UPDATE_PRODUCTS("invoice.m2m.create");
 
     private static final Logger LOG = LoggerFactory.getLogger(QueryTemplate.class);
     private static final String QUERIES_BUNDLE = "queries";
